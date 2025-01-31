@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC測定データ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        .data {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // ① URLからパラメータを取得
+            const params = new URLSearchParams(window.location.search);
+            const temp = params.get("temp");
+            const humidity = params.get("humidity");
+
+            // ② データがあるかチェックし、表示
+            document.getElementById("temp").innerText = temp ? `🌡 温度: ${temp}°C` : "温度データなし";
+            document.getElementById("humidity").innerText = humidity ? `💧 湿度: ${humidity}%` : "湿度データなし";
+        };
+    </script>
+</head>
+<body>
+    <h1>NFC測定データ</h1>
+    <p class="data" id="temp">データ取得中...</p>
+    <p class="data" id="humidity">データ取得中...</p>
+</body>
+</html>
