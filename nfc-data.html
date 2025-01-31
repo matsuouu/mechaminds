@@ -3,37 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFC測定データ</title>
+    <title>温度と湿度 | Temperature & Humidity</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
-        h1 {
-            color: #333;
-        }
-        .data {
-            font-size: 1.5em;
-            margin: 10px 0;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .hidden { display: none; }
     </style>
-    <script>
-        window.onload = function() {
-            // ① URLからパラメータを取得
-            const params = new URLSearchParams(window.location.search);
-            const temp = params.get("temp");
-            const humidity = params.get("humidity");
-
-            // ② データがあるかチェックし、表示
-            document.getElementById("temp").innerText = temp ? `🌡 温度: ${temp}°C` : "温度データなし";
-            document.getElementById("humidity").innerText = humidity ? `💧 湿度: ${humidity}%` : "湿度データなし";
-        };
-    </script>
 </head>
 <body>
-    <h1>NFC測定データ</h1>
-    <p class="data" id="temp">データ取得中...</p>
-    <p class="data" id="humidity">データ取得中...</p>
+
+    <h1 id="title">温度と湿度</h1>
+    <p id="description">現在の温度と湿度を表示します。</p>
+
+    <p>
+        <strong id="temp-label">温度: </strong> <span id="temp">--</span>°C
+    </p>
+    <p>
+        <strong id="humidity-label">湿度: </strong> <span id="humidity">--</span>%
+    </p>
+
+    <button id="lang-button" onclick="toggleLanguage()">🇬🇧 Switch to English</button>
+
+    <script>
+        let currentLang = "ja";
+
+        function toggleLanguage() {
+            if (currentLang === "ja") {
+                currentLang = "en";
+                document.getElementById("title").textContent = "Temperature & Humidity";
+                document.getElementById("description").textContent = "Displaying current temperature and humidity.";
+                document.getElementById("temp-label").textContent = "Temperature: ";
+                document.getElementById("humidity-label").textContent = "Humidity: ";
+                document.getElementById("lang-button").textContent = "🇯🇵 日本語へ切り替え";
+            } else {
+                currentLang = "ja";
+                document.getElementById("title").textContent = "温度と湿度";
+                document.getElementById("description").textContent = "現在の温度と湿度を表示します。";
+                document.getElementById("temp-label").textContent = "温度: ";
+                document.getElementById("humidity-label").textContent = "湿度: ";
+                document.getElementById("lang-button").textContent = "🇬🇧 Switch to English";
+            }
+        }
+
+        // 🌡️ URL パラメータから温度・湿度データを取得
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById("temp").textContent = params.get("temp") || "--";
+        document.getElementById("humidity").textContent = params.get("humidity") || "--";
+    </script>
+
 </body>
 </html>
